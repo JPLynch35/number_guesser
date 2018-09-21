@@ -17,9 +17,9 @@
 
     <form>
       <div class="center">
-        <input type="text" name="guess" placeholder="Enter your guess", id="guess-box"><br>
-        <input type="submit" value="Guess", class="button", id="guess-btn">
-        <input type="reset" value="Clear", class="button", id="reset-btn">
+        <input type="text" name="guess" placeholder="Enter your guess" id="guess-box" onkeyup="checkFilled()"></br>
+        <input type="button" value="Guess" class="button" id="guess-btn">
+        <input type="button" value="Clear" class="button" id="clear-btn" disabled>
       </div>
     </form>
 
@@ -28,25 +28,47 @@
       <div id="show-guess">&nbsp;</div>
       <p class="text" id="compare">&nbsp;</p>
     </section>
-    <input class="wide-button" type="button" value="Reset" onClick="resetPage()">
+    <input type="button" value="Reset" class="wide-button" id="reset-btn" onClick="resetPage()" disabled>
     </main>
   </body>
 </html>
 
 <script>
-  document.getElementById("last-guess").style.visibility = "hidden"; 
   var computerGuess;
   window.addEventListener("load", function() {
+    document.getElementById("last-guess").style.visibility = "hidden"; 
     computerGuess = Math.floor(Math.random() * 100) + 1
   });
   document.getElementById("guess-btn").addEventListener("click", function(){
-    event.preventDefault();
-    document.getElementById("last-guess").style.visibility = "visible"; 
     let userGuess = document.getElementById("guess-box").value;
-    document.getElementById("show-guess").innerHTML = userGuess;
-    compareNumbers(computerGuess, userGuess);
+    checkNumber(computerGuess, userGuess);
+  });
+  document.getElementById("clear-btn").addEventListener("click", function(){
+    document.getElementById("guess-box").value = "";
+    disableClear();
   });
 
+  function checkFilled() {
+    var inputVal = document.getElementById("guess-box").value
+    if (inputVal === "") {
+      disableClear();
+    }
+    else {
+      enableClear()
+    }
+  };
+  function checkNumber(computerGuess, userGuess) {
+    if (isNaN(userGuess)) {
+      window.alert("Guess is not a number. Please enter valid guess.");
+    } else if (userGuess < 1 || userGuess > 100) {
+      window.alert("Guess is outside possible range. Please enter guess between 1 and 100.");
+    } else {
+      document.getElementById("last-guess").style.visibility = "visible"; 
+      document.getElementById("show-guess").innerHTML = userGuess;
+      compareNumbers(computerGuess, userGuess);
+      enableReset();
+    }
+  };
   function compareNumbers(computerGuess, userGuess) {
     if (userGuess > computerGuess) {
       document.getElementById("compare").innerHTML = "That is too high";
@@ -55,6 +77,18 @@
     } else {
       document.getElementById("compare").innerHTML = "BOOM!";
     }
+  };
+  function disableClear() {
+    document.getElementById("clear-btn").disabled = true;
+    document.getElementById("clear-btn").style.background="#D0D2D3";
+  };
+  function enableClear() {
+    document.getElementById("clear-btn").disabled = false;
+    document.getElementById("clear-btn").style.background="#929497";
+  };
+  function enableReset() {
+    document.getElementById("reset-btn").disabled = false;
+    document.getElementById("reset-btn").style.background="#929497";
   };
   function resetPage() {
     window.location.reload()
@@ -96,7 +130,6 @@
   .button {
     width: 140px;
     height: 40px;
-    background-color: #D0D2D3;
     color: #ffffff;
     font-size: 25px;
     font-weight: 300;
@@ -147,6 +180,14 @@
     margin-bottom: 20px;
     font-family: Open Sans;
     font-size: 25px;
+  }
+
+  #guess-btn {
+    background-color: #929497;
+  }
+
+  #clear-btn {
+    background-color: #D0D2D3;
   }
 
   #show-guess {
