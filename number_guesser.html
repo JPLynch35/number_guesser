@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NumberGuesser</title>
+    <link rel="stylesheet" type="text/css" href='https://fonts.googleapis.com/css?family=Open+Sans:300'/>
+  </head>
+
+  <body>
+    <header>
+      <p id="title1">Number&nbsp;</p>
+      <p id="title2">Guesser</p>
+    </header>
+    <main>
+
+    <form>
+      <div class="center">
+        <input type="text" name="guess" placeholder="Enter your guess", id="guess-box"><br>
+        <input type="submit" value="Guess", class="button", id="guess-btn">
+        <input type="reset" value="Clear", class="button", id="reset-btn">
+      </div>
+    </form>
+
+    <section id="last-guess">
+      <p class="text">Your last guess was</p>
+      <div id="show-guess">&nbsp;</div>
+      <p class="text" id="compare">&nbsp;</p>
+    </section>
+    <input class="wide-button" type="button" value="Reset" onClick="resetPage()">
+    </main>
+  </body>
+</html>
+
+<script>
+  document.getElementById("last-guess").style.visibility = "hidden"; 
+  var computerGuess;
+  window.addEventListener("load", function() {
+    computerGuess = Math.floor(Math.random() * 100) + 1
+  });
+  document.getElementById("guess-btn").addEventListener("click", function(){
+    event.preventDefault();
+    document.getElementById("last-guess").style.visibility = "visible"; 
+    let userGuess = document.getElementById("guess-box").value;
+    document.getElementById("show-guess").innerHTML = userGuess;
+    compareNumbers(computerGuess, userGuess);
+  });
+
+  function compareNumbers(computerGuess, userGuess) {
+    if (userGuess > computerGuess) {
+      document.getElementById("compare").innerHTML = "That is too high";
+    } else if (userGuess < computerGuess) {
+      document.getElementById("compare").innerHTML = "That is too low";
+    } else {
+      document.getElementById("compare").innerHTML = "BOOM!";
+    }
+  };
+  function resetPage() {
+    window.location.reload()
+  };
+</script>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  header {
+    background-color: #404041;
+    width: 100%;
+    height: 80px;
+    font-family: Open Sans;
+    font-size: 45px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  form {
+    align-self: center;
+  }
+
+  section {
+    text-align: center;
+  }
+
+  .button {
+    width: 140px;
+    height: 40px;
+    background-color: #D0D2D3;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 300;
+    border-radius: 15%/50%;
+    margin: 10px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .text {
+    color: #404041;
+    font-size: 25px;
+    font-weight: 300;
+    font-family: Open Sans;
+    margin: 10px;
+  }
+
+  .wide-button {
+    width: 300px;
+    height: 40px;
+    background-color: #D0D2D3;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 300;
+    border-radius: 6%/50%;
+    margin: 10px;
+    align-self: center;
+  }
+
+  #title1 {
+    color: #ED458B;
+    font-weight: 700;
+  }
+
+  #title2 {
+    color: #E6E7E8;
+  }
+
+  #guess-box {
+    width: 300px;
+    height: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #D0D2D3;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: Open Sans;
+    font-size: 25px;
+  }
+
+  #show-guess {
+    color: #EB008B;
+    font-size: 150px;
+    font-family: Open Sans;
+  }
+</style>
