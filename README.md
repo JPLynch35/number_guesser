@@ -8,10 +8,10 @@ Start Screen:
 <img width="1440" alt="screen shot 2018-09-22 at 9 39 28 am" src="https://user-images.githubusercontent.com/32905782/45918935-71733380-be4b-11e8-80de-22571ee3cf98.png">
 
 Guess was too low:  
-<img width="1438" alt="screen shot 2018-09-22 at 9 41 37 am" src="https://user-images.githubusercontent.com/32905782/45918970-fb230100-be4b-11e8-82f6-431eb1bf0d26.png">
+<img width="1440" alt="screen shot 2018-09-22 at 9 46 53 am" src="https://user-images.githubusercontent.com/32905782/45919013-869c9200-be4c-11e8-8284-2eccb092e212.png">
 
 Guess was too high:  
-<img width="1440" alt="screen shot 2018-09-22 at 9 41 45 am" src="https://user-images.githubusercontent.com/32905782/45918977-09711d00-be4c-11e8-938d-1e8bb81e4b48.png">
+<img width="1440" alt="screen shot 2018-09-22 at 9 47 01 am" src="https://user-images.githubusercontent.com/32905782/45919017-92885400-be4c-11e8-9adb-1161dee6fe7f.png">
 
 Guess was spot on:  
 <img width="1440" alt="screen shot 2018-09-22 at 9 42 04 am" src="https://user-images.githubusercontent.com/32905782/45918981-155cdf00-be4c-11e8-98f9-3c9fc1352003.png">
@@ -20,7 +20,7 @@ Error 1 (Guess was not a number):
 <img width="444" alt="screen shot 2018-09-22 at 9 42 38 am" src="https://user-images.githubusercontent.com/32905782/45918984-31f91700-be4c-11e8-853b-4230a675aa6d.png">
 
 Error 2 (Guess was out of range):  
-<img width="449" alt="screen shot 2018-09-22 at 9 42 25 am" src="https://user-images.githubusercontent.com/32905782/45918991-4fc67c00-be4c-11e8-8a5f-cd2d80caec45.png">
+<img width="446" alt="screen shot 2018-09-22 at 9 47 10 am" src="https://user-images.githubusercontent.com/32905782/45919020-9caa5280-be4c-11e8-8cd9-28b9bf37dc86.png">
 
 ## Authors
 
