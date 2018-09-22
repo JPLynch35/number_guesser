@@ -48,8 +48,22 @@
     document.getElementById("last-guess").style.visibility = "hidden";
     //sets minimum range to value stored in browser (required 3rd party cookies)
     let minRange = parseInt(localStorage.getItem("storedMinRange"));
+    //if minimum range is NaN due to the first time loading game
+    if (isNaN(minRange)) {
+      //set minimum range to 0
+      minRange = 0;
+      //stores the minimum range of 0 into the browser (required 3rd party cookies)
+      localStorage.setItem("storedMinRange", minRange);
+    };
     //sets maximum range to value stored in browser (required 3rd party cookies)
     let maxRange = parseInt(localStorage.getItem("storedMaxRange"));
+    //if maximum range is NaN due to the first time loading game
+    if (isNaN(maxRange)) {
+      //set maximum range to 0
+      maxRange = 100;
+      //stores the maximum range of 100 into the browser (required 3rd party cookies)
+      localStorage.setItem("storedMaxRange", maxRange);
+    };
     //inserts minimum range value into page's min-range div
     document.getElementById("min-range").value = minRange;
     //inserts maximum range value into page's max-range div
@@ -76,6 +90,10 @@
     let userGuess = parseInt(document.getElementById("guess-box").value);
     //calls the function checkNumber, defined below
     checkNumber(computerGuess, userGuess);
+    //sets the guess-box input div to empty (shows placeholder)
+    document.getElementById("guess-box").value = "";
+    //calls the function disableClear, defined below
+    disableClear();
   });
   //adds click listener to clear button
   document.getElementById("clear-btn").addEventListener("click", function(){
