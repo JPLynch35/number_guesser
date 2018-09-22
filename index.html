@@ -39,104 +39,180 @@
 </html>
 
 <script>
+  //mostly used lets everywhere as the ranges and guesses can change at the user's will
+  //set computerGuess as var as I need to declare it outside the block and need to reset the value inside the block
   var computerGuess;
+  //block to execute on page load
   window.addEventListener("load", function() {
+    //hide last-guess div before user starts guessing
     document.getElementById("last-guess").style.visibility = "hidden";
-    var minRange = parseInt(localStorage.getItem("storedMinRange"));
-    var maxRange = parseInt(localStorage.getItem("storedMaxRange"));
-    computerGuess = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+    //sets minimum range to value stored in browser (required 3rd party cookies)
+    let minRange = parseInt(localStorage.getItem("storedMinRange"));
+    //sets maximum range to value stored in browser (required 3rd party cookies)
+    let maxRange = parseInt(localStorage.getItem("storedMaxRange"));
+    //inserts minimum range value into page's min-range div
     document.getElementById("min-range").value = minRange;
+    //inserts maximum range value into page's max-range div
     document.getElementById("max-range").value = maxRange;
+    //random number is selected between range values
+    computerGuess = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
   });
+  //adds click listener to range set button
   document.getElementById("range-btn").addEventListener("click", function(){
-    var minRange = document.getElementById("min-range").value;
+    //sets minimum range variable to what is in the min-range input div
+    let minRange = document.getElementById("min-range").value;
+    //stores the minimum range variable into the browser (required 3rd party cookies)
     localStorage.setItem("storedMinRange", minRange);
-    var maxRange = document.getElementById("max-range").value;
+    //sets maximum range variable to what is in the max-range input div
+    let maxRange = document.getElementById("max-range").value;
+    //stores the maximum range variable into the browser (required 3rd party cookies)
     localStorage.setItem("storedMaxRange", maxRange);
+    //reloads page so that new range will take effect
     window.location.reload();
   });
+  //adds click listener to guess button
   document.getElementById("guess-btn").addEventListener("click", function(){
+    //sets guess variable to what is in the guess-box input div, brings in value as integer
     let userGuess = parseInt(document.getElementById("guess-box").value);
+    //calls the function checkNumber, defined below
     checkNumber(computerGuess, userGuess);
   });
+  //adds click listener to clear button
   document.getElementById("clear-btn").addEventListener("click", function(){
+    //sets the guess-box input div to empty (shows placeholder)
     document.getElementById("guess-box").value = "";
+    //calls the function disableClear, defined below
     disableClear();
   });
 
+  //defines function named checkMinRange
   function checkMinRange() {
-    var min = document.getElementById("min-range").value;
+    //sets minimum range variable to what is in the min-range input div
+    let min = document.getElementById("min-range").value;
+    //if the minimum range variable changes from what is stored in the browser
     if (min === localStorage.getItem("storedMinRange")) {
+      //calls the function disableRangeSet, defined below
       disableRangeSet();
     } else {
+      //calls the function enableRangeSet, defined below
       enableRangeSet();
     }
   };
+  //defines function named checkMaxRange
   function checkMaxRange() {
-    var max = document.getElementById("max-range").value;
+    //sets maximum range variable to what is in the max-range input div
+    let max = document.getElementById("max-range").value;
+    //if the maximum range variable changes from what is stored in the browser
     if (max === localStorage.getItem("storedMaxRange")) {
+      //calls the function disableRangeSet, defined below
       disableRangeSet();
     } else {
+      //calls the function enableRangeSet, defined below
       enableRangeSet();
     }
   };
+  //defines function named checkFilled
   function checkFilled() {
-    var inputVal = document.getElementById("guess-box").value;
+    //sets guess variable to what is in the guess.box input div
+    let inputVal = document.getElementById("guess-box").value;
+    //if guess variable is an empty string
     if (inputVal === "") {
+      //calls the function disableClear, defined below
       disableClear();
     }
     else {
+      //calls the function enableClear, defined below
       enableClear()
     }
   };
+  //defines function named checkNumber
   function checkNumber(computerGuess, userGuess) {
-    var minRange = localStorage.getItem("storedMinRange");
-    var maxRange = localStorage.getItem("storedMaxRange");
+    //sets minimum range variable to value stored in browser (required 3rd party cookies)
+    let minRange = localStorage.getItem("storedMinRange");
+    //sets maximum range variable to value stored in browser (required 3rd party cookies)
+    let maxRange = localStorage.getItem("storedMaxRange");
+    //if guess variable is not a number
     if (isNaN(userGuess)) {
+      //browser popup warning user that guess is not a number
       window.alert("Guess is not a number. Please enter valid guess.");
+    //if guess variable is not within range
     } else if (userGuess < minRange || userGuess > maxRange) {
+      //browser popup warning user that guess is not within the range
       window.alert("Guess is outside possible range. Please enter guess between " + minRange + " and " + maxRange + ".");
+    //if it gets here then guess is valid
     } else {
-      document.getElementById("last-guess").style.visibility = "visible"; 
+      //unhides last-guess div
+      document.getElementById("last-guess").style.visibility = "visible";
+      //sets html inside the show-guess div to be the users guess
       document.getElementById("show-guess").innerHTML = userGuess;
+      //calls the function compareNumbers, defined below
       compareNumbers(computerGuess, userGuess);
+      //calls the function enableReset, defined below
       enableReset();
     }
   };
+  //defines function named compareNumbers
   function compareNumbers(computerGuess, userGuess) {
+    //if the guess is higher than the randomly generated number
     if (userGuess > computerGuess) {
+      //sets html inside the compare div to show the user the guess was too high
       document.getElementById("compare").innerHTML = "That is too high";
+    //if the guess is lower than the randomly generated number
     } else if (userGuess < computerGuess) {
+      //sets html inside the compare div to show the user the guess was too low
       document.getElementById("compare").innerHTML = "That is too low";
+    //if it gets here then guess is a match to the randomly generated number
     } else {
+      //sets html inside the compare div to show the user the guess was spot on
       document.getElementById("compare").innerHTML = "BOOM!";
-      var newMinRange = parseInt(localStorage.getItem("storedMinRange")) - 10;
+      //lowers the next games minimum range by 10
+      let newMinRange = parseInt(localStorage.getItem("storedMinRange")) - 10;
+      //saves the new lower minimum range number in the browser
       localStorage.setItem("storedMinRange", newMinRange);
-      var newMaxRange = parseInt(localStorage.getItem("storedMaxRange")) + 10;
+      //raises the next games maximum range by 10
+      let newMaxRange = parseInt(localStorage.getItem("storedMaxRange")) + 10;
+      //saves the new higher maximum range number in the browser
       localStorage.setItem("storedMaxRange", newMaxRange);
     }
   };
+  //defines function named disableRangeSet
   function disableRangeSet() {
+    //disables the set range button so it is not clickable
     document.getElementById("range-btn").disabled = true;
+    //changes the color of the set range button to indicate it is not clickable
     document.getElementById("range-btn").style.background="#D0D2D3";
   };
+  //defines function named enableRangeSet
   function enableRangeSet() {
+    //enables the set range button so it is clickable
     document.getElementById("range-btn").disabled = false;
+    //changes the color of the set range button to indicate it is clickable
     document.getElementById("range-btn").style.background="#929497";
   };
+  //defines function named disableClear
   function disableClear() {
+    //disables the clear button so it is not clickable
     document.getElementById("clear-btn").disabled = true;
+    //changes the color of the clear button to indicate it is not clickable
     document.getElementById("clear-btn").style.background="#D0D2D3";
   };
+  //defines function named enableClear
   function enableClear() {
+    //enables the clear button so it is clickable
     document.getElementById("clear-btn").disabled = false;
+    //changes the color of the clear button to indicate it is clickable
     document.getElementById("clear-btn").style.background="#929497";
   };
+  //defines function named enableReset
   function enableReset() {
+    //enables the reset button so it is clickable
     document.getElementById("reset-btn").disabled = false;
+    //changes the color of the reset button to indicate it is clickable
     document.getElementById("reset-btn").style.background="#929497";
   };
+  //defines function named resetPage
   function resetPage() {
+    //reloads the page
     window.location.reload()
   };
 </script>
