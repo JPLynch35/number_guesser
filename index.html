@@ -43,7 +43,15 @@
   window.addEventListener("load", function() {
     document.getElementById("last-guess").style.visibility = "hidden";
     var minRange = parseInt(localStorage.getItem("storedMinRange"));
+    if (isNaN(minRange)) {
+      minRange = 0;
+      localStorage.setItem("storedMinRange", minRange);
+    };
     var maxRange = parseInt(localStorage.getItem("storedMaxRange"));
+    if (isNaN(maxRange)) {
+      maxRange = 100;
+      localStorage.setItem("storedMaxRange", maxRange);
+    };
     computerGuess = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
     document.getElementById("min-range").value = minRange;
     document.getElementById("max-range").value = maxRange;
@@ -58,6 +66,8 @@
   document.getElementById("guess-btn").addEventListener("click", function(){
     let userGuess = parseInt(document.getElementById("guess-box").value);
     checkNumber(computerGuess, userGuess);
+    document.getElementById("guess-box").value = "";
+    disableClear();
   });
   document.getElementById("clear-btn").addEventListener("click", function(){
     document.getElementById("guess-box").value = "";
